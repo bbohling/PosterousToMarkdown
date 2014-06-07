@@ -7,13 +7,14 @@ var moment = require('moment');
 
 //var file = "/Users/Shared/Posterous - bbohling.com/2012.09.07-13.16.02 PosterousBackup - bohling@gmail.com/Brandon Bohling {Again}/2009.09.01 Pix/post.json";
 //var file = "/Users/Shared/Posterous - bbohling.com/2012.09.07-13.16.02 PosterousBackup - bohling@gmail.com/Brandon Bohling {Again}/2010.10.30 Maui Photos/post.json";
-var sourceDirectory = '/Users/Shared/Posterous - bbohling.com/2012.09.07-13.16.02 PosterousBackup - bohling@gmail.com/Brandon Bohling {Again}';
+var sourceDirectory = '/Users/bbohling/Code/github/PosterousToMarkdown/data/Posterous - bbohling.com/2012.09.07-13.16.02 PosterousBackup - bohling@gmail.com/Brandon Bohling {Again}';
 var templateFile = "postTemplate.md";
 var postYear;
 var postMonth;
 
 function logit(msg, type) {
   var prefix = '';
+  var type = '';
   if (type = 'error') {
     prefix = '> ERROR: ';
   }
@@ -39,7 +40,7 @@ readDirectory(sourceDirectory, function (err, files) {
             return;
           }
           if (stat && stat.isFile()) {
-            // readAndSavePost(postPath, path);
+            readAndSavePost(postPath, path);
             copyImages(objectPath);
           }
         });  
@@ -111,7 +112,7 @@ function copyImages(imagePath) {
           logit('read image dir: ' + imagesFolder, 'error');
           return;
         }
-        logit('i: ' + images);
+        // logit('i: ' + images);
         images.forEach(function (image) {
           var imagePath = imagesFolder + '/' + image;
           fsCheck(imagePath, function (err, stat) {
@@ -128,9 +129,7 @@ function copyImages(imagePath) {
                     logit('mkdir: ' + folderPath, 'error');
                     return;
                   }
-                  //  console.log('Copy image: ' + image);
-                  
-                  //copyFile(path, folderPath + '/' + image, cb);
+                  copyFile(path, folderPath + '/' + image, cb);
                 });
               }
             }
